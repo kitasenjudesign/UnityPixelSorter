@@ -42,7 +42,7 @@ public class SortExample : MonoBehaviour
         shader.SetTexture(0, "tex", tex);
         shader.SetFloat("th",_th);
 
-        _th = Mathf.Sin(Time.realtimeSinceStartup) * 0.7f + 1f;
+        //_th = Mathf.Sin(Time.realtimeSinceStartup) * 0.7f + 1f;
 
         shader.Dispatch(0,  1, 1, 1);
         
