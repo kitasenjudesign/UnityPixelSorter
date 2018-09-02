@@ -1,0 +1,39 @@
+﻿#pragma kernel CSMain
+
+RWTexture2D<float4> tex;
+
+float w;
+float h;
+float th;
+
+[numthreads(1,256,1)]
+void CSMain (uint2 id : SV_DispatchThreadID,uint3 groupID : SV_GroupID)
+{
+
+    //groupId
+    //uint2 idx = id;
+    uint2 idx = id;//uint2( 0,groupID.x + groupID.y*h );
+
+    int i, j;
+    float4 temp;
+    int array_size = w;
+
+    for (i = 0; i < (array_size - 1); i++) {
+        for (j = (array_size - 1); j > i; j--) {
+            
+            uint2 id1 = idx + uint2(j-1,0);
+            uint2 id2 = idx + uint2(j,0);
+            float4 value1 = tex[ id1 ];
+            float4 value2 = tex[ id2 ];
+
+            if ( length(value2) > length(value1) && length(value1) > th ) {
+
+                tex[ id1 ]    = value2;
+                tex[ id2 ]    = value1;
+
+            }
+
+        }
+    }
+
+}
